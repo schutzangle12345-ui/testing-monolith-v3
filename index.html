@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testing-monolith-v3 | Free Data Visualization & Dashboard Builder</title>
+    <meta name="description" content="Create professional charts and interactive dashboards quickly without coding. The free data visualization tool for analysts and marketers.">
+    <style>
+        :root {
+            --color-primary: #1e3a8a;
+            --color-primary-dark: #1e293b;
+            --color-background: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #0f172a;
+            --color-text-muted: #475569;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --border-radius: 4px;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.2s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        header {
+            background-color: var(--color-surface);
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1px solid #cbd5e1;
+            background: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--color-text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--color-surface);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #e2e8f0;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        /* How It Works */
+        .steps {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            flex: 1;
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            flex: 1;
+            background: var(--color-surface);
+            padding: 3rem 2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--color-primary);
+            position: relative;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--color-primary-dark);
+            color: white;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+        }
+
+        .testimonial-author {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* Final CTA Form */
+        .cta-section {
+            padding: 6rem 0;
+            background-color: var(--color-surface);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            background: var(--color-surface);
+            border-top: 1px solid #e2e8f0;
+            color: var(--color-text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .pricing-grid { flex-direction: column; }
+            .steps { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">
+                <span style="font-weight:700;font-size:1.25rem">testing-monolith-v3</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="https://testingmonolithv3.com" class="btn btn-primary" data-track="cta_click">Get Started Free</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Turn Raw Data Into Professional Dashboards.</h1>
+            <p>Empower your team with free data visualization tools. Create stunning charts and interactive dashboards in minutes, without a single line of code.</p>
+            <div class="hero-btns">
+                <a href="https://testingmonolithv3.com" class="btn btn-primary" data-track="cta_click">Start Creating Now</a>
+                <a href="pricing.html" style="text-decoration: underline; font-weight: 500;">View Pricing Plans</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed for Non-Technical Professionals</h2>
+                <p>Stop wrestling with complex BI tools. Get insights faster.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>No-Code Analytics</h3>
+                    <p>Upload a CSV and build clean dashboards instantly. Perfect for analysts and marketers who need answers, not complex SQL queries.</p>
+                </div>
+                <div class="card">
+                    <h3>Smart Design Defaults</h3>
+                    <p>Never build an "ugly" chart again. Our system uses professional design principles to ensure your visualizations are clear and credible.</p>
+                </div>
+                <div class="card">
+                    <h3>Interactive Sharing</h3>
+                    <p>Share dashboards via secure links or interactive embeds. Let your stakeholders explore data without needing their own BI seat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section" style="background: #f1f5f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Connect Your Data</h3>
+                    <p>Simply upload your CSV or link your Google Sheet. No complex database migrations required.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Build Your View</h3>
+                    <p>Use our drag-and-drop builder with sensible defaults to create charts that highlight the right insights.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Share the Insight</h3>
+                    <p>Publish an interactive dashboard link or embed the charts directly into your Notion or internal docs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that fits your reporting needs.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0<span style="font-size: 1rem; color: var(--color-text-muted);">/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ First 3 visualizations</li>
+                        <li>✓ Standard chart types</li>
+                        <li>✓ Public sharing links</li>
+                        <li>✓ CSV uploads</li>
+                    </ul>
+                    <a href="https://testingmonolithv3.com" class="btn btn-outline" style="width:100%" data-track="cta_click">Get Started</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--color-primary); color: white; padding: 2px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">MOST POPULAR</div>
+                    <h3>Premium</h3>
+                    <div class="price">$0<span style="font-size: 1rem; color: var(--color-text-muted);">/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ Premium $30/month for more</li>
+                        <li>✓ Unlimited visualizations</li>
+                        <li>✓ Password protected links</li>
+                        <li>✓ Custom branding</li>
+                        <li>✓ Priority support</li>
+                    </ul>
+                    <a href="https://testingmonolithv3.com" class="btn btn-primary" style="width:100%" data-track="cta_click">Start Premium Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Trusted by Data-Driven Teams</h2>
+            </div>
+            <div class="grid">
+                <div class="testimonial-card">
+                    <p>"We replaced our complex Tableau setup for marketing reporting. testing-monolith-v3 is 10x faster for quick campaign insights."</p>
+                    <div class="testimonial-author">— Sarah K., Marketing Director</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Finally a tool that doesn't require a design degree to make charts look professional. My clients love the interactive embeds."</p>
+                    <div class="testimonial-author">— James L., Independent Analyst</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The best way to share data with non-technical stakeholders. They can click around and filter without breaking anything."</p>
+                    <div class="testimonial-author">— Maria G., Product Manager</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Start Visualizing for Free</h2>
+                <p>Join thousands of professionals making data easier to understand. Get started with your first dashboard today.</p>
+            </div>
+            <div class="form-container">
+                <form data-backend="form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Work Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Your Role</label>
+                        <select id="role" name="role">
+                            <option value="analyst">Analyst</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="product">Product Manager</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-track="cta_click">Claim Your Free Access</button>
+                    <p data-success style="display:none; color: #059669; font-weight: bold; margin-top: 1rem; text-align: center;">Success! Check your email to start building.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <span style="font-weight:700;font-size:1.25rem">testing-monolith-v3</span>
+                </a>
+                <p>The standard in free, no-code data visualization for professional teams.</p>
+                <div class="social-icons">
+                    <a href="#">
+                        <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#">
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 style="color: var(--color-text); margin-bottom: 1.5rem;">Product</h4>
+                <ul style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--color-text); margin-bottom: 1.5rem;">Support</h4>
+                <ul style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+            <p>&copy; 2026 testing-monolith-v3. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function() {
+  var BACKEND = 'https://epitaphic-everett-propitious.ngrok-free.dev/api';
+  var TOKEN = '68612fd35c050b05cb9598cb5a664a9882808f252f4ccb2a3e40973a4079918a';
+  var DOMAIN = 'testingmonolithv3.com';
+  var FORM_ID = 'cmmpt7ng60001y4v4n30xjv93';
+  var HEADERS = { 'Content-Type': 'application/json', 'X-Token': TOKEN, 'X-Domain': DOMAIN };
+
+  // 1. Auto-track pageview
+  fetch(BACKEND + '/track', {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify({ event: 'pageview', path: window.location.pathname })
+  }).catch(function(){});
+
+  // 2. Track CTA clicks
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-track]');
+    if (el) {
+      fetch(BACKEND + '/track', {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({ event: el.getAttribute('data-track'), path: window.location.pathname })
+      }).catch(function(){});
+    }
+  });
+
+  // 3. Handle all forms (Contact, Signup, Waitlist)
+  document.addEventListener('submit', function(e) {
+    var form = e.target.closest('form[data-backend]');
+    if (!form) return;
+    e.preventDefault();
+    var type = form.getAttribute('data-backend');
+    var endpoint = type === 'signup' ? '/users' : '/forms/submit';
+    
+    // Extract dynamic form fields
+    var data = {};
+    new FormData(form).forEach(function(v, k) { data[k] = v; });
+    
+    // Add Form ID if it's a general form and we have it
+    if (type === 'form' && FORM_ID) {
+      data.formId = FORM_ID;
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = '';
+    if (btn) {
+      originalText = btn.innerText;
+      btn.innerText = 'Sending...';
+      btn.disabled = true;
+    }
+
+    // Track Form Submission Event
+    fetch(BACKEND + '/track', {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({ 
+        event: 'form_submission', 
+        path: window.location.pathname,
+        metadata: { formType: type } 
+      })
+    }).catch(function(){});
+
+    // Submit Form Data
+    fetch(BACKEND + endpoint, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); }).then(function(res) {
+      if (res.success) {
+        var msg = form.querySelector('[data-success]');
+        if (msg) { msg.style.display = 'block'; }
+        form.reset();
+        if (btn) btn.style.display = 'none';
+      } else {
+        alert(res.error || 'Failed to submit form');
+        if (btn) { btn.innerText = originalText; btn.disabled = false; }
+      }
+    }).catch(function(){
+      alert('Network error occurred');
+      if (btn) { btn.innerText = originalText; btn.disabled = false; }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
